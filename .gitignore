@@ -26,3 +26,6 @@ screenshots/
 
 # Local configuration
 .env
+
+# hassfest checkout (scripts/check.sh)
+.hassfest-core/

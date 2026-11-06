@@ -141,7 +141,7 @@
     },
     "import_legacy": {
       "name": "Import legacy subscriptions",
-      "description": "Admin only. Reads u:<user_id> / d:<device_tracker> tokens from an input_text and stores them as subscriptions to the topic.",
+      "description": "Admin only. Reads u:USER_ID / d:DEVICE_TRACKER tokens from an input_text and stores them as subscriptions to the topic.",
       "fields": {
         "topic": {
           "name": "Topic",

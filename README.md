@@ -24,7 +24,7 @@ The owner of a Companion app device is taken from its registration, so nothing h
 
 ## Installation
 
-1. HACS → three dots → **Custom repositories** → add `https://github.com/OLDIN/ha-notify-subscriptions` (Integration).
+1. HACS → three dots → **Custom repositories** → add `https://github.com/OLDIN/ha_notify_subscriptions` (Integration).
 2. Install **Notify Subscriptions** and restart Home Assistant.
 3. **Settings → Devices & services → Add integration → Notify Subscriptions**.
 
@@ -78,8 +78,9 @@ scripts/dev_ha_ui.sh send air_raid "Test"   # shows up as a persistent notificat
 scripts/dev_ha_ui.sh down
 ```
 
-`pre-commit install` runs ruff, mypy and pytest before each commit. CI runs the same checks plus
-`hassfest` and HACS validation.
+`scripts/check.sh` runs locally what CI runs: pre-commit (ruff, whitespace, yaml), mypy, pytest and
+hassfest. Only the HACS validation needs GitHub: it checks the repository description and topics.
+`pre-commit install` runs the same hooks before each commit.
 
 Releases: see [docs/VERSION_MANAGEMENT.md](docs/VERSION_MANAGEMENT.md) (`python scripts/bump_version.py patch --pr`,
 the Release workflow tags and publishes after the merge).

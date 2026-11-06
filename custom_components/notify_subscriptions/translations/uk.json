@@ -141,7 +141,7 @@
     },
     "import_legacy": {
       "name": "Імпортувати старі підписки",
-      "description": "Тільки для адміністратора. Читає токени u:<user_id> / d:<device_tracker> з input_text і зберігає їх як підписки на тему.",
+      "description": "Тільки для адміністратора. Читає токени u:USER_ID / d:DEVICE_TRACKER з input_text і зберігає їх як підписки на тему.",
       "fields": {
         "topic": {
           "name": "Тема",

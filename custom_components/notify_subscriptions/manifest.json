@@ -11,10 +11,10 @@
   "dependencies": [
     "notify"
   ],
-  "documentation": "https://github.com/OLDIN/ha-notify-subscriptions",
+  "documentation": "https://github.com/OLDIN/ha_notify_subscriptions",
   "integration_type": "service",
   "iot_class": "calculated",
-  "issue_tracker": "https://github.com/OLDIN/ha-notify-subscriptions/issues",
+  "issue_tracker": "https://github.com/OLDIN/ha_notify_subscriptions/issues",
   "requirements": [],
   "single_config_entry": true,
   "version": "0.1.0"
