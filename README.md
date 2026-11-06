@@ -66,22 +66,47 @@ data:
 | `notify_subscriptions.set_channel` / `remove_channel` | admin | Manage non-Companion channels. |
 | `notify_subscriptions.import_legacy` | admin | Imports an `input_text` list of `u:<user_id>` / `d:<device_tracker>` tokens as subscriptions to a topic. Users that are not listed are set to `off`. |
 
-A dashboard card for users to manage their own subscriptions is planned.
+## Dashboard card
+
+The integration ships `custom:notify-subscriptions-card` and adds it to the dashboard resources by
+itself (storage-mode dashboards). Every user sees only their own devices and subscriptions:
+
+![Card](tests/js/__snapshots__/settings-page.png)
+
+```yaml
+type: custom:notify-subscriptions-card
+title: Power            # optional heading
+icon: mdi:flash         # optional heading icon
+topics:                 # optional: which topics and in which order (default: all)
+  - power_change
+  - power_warning
+```
+
+For each topic the user picks **Off / All mine / Picked**, taps devices to turn them on or off, and can
+send a test to themselves. New devices and topics show up without editing the dashboard.
+
+YAML-mode dashboards: add the resource by hand —
+`/notify_subscriptions_static/notify-subscriptions-card.js` (JavaScript module).
 
 ## Development
 
 ```bash
 scripts/setup_dev_env.sh            # once: .venv-ha with Home Assistant + test dependencies (Python 3.13)
+npm ci                              # once: card test dependencies (vitest, puppeteer + Chromium)
 .venv-ha/bin/pytest                 # tests against a real Home Assistant core
+npm test                            # card tests + image snapshots (tests/js/__snapshots__)
 scripts/dev_ha_ui.sh up             # real HA on http://127.0.0.1:8125 (admin / notify1234) with demo topics
 scripts/dev_ha_ui.sh send air_raid "Test"   # shows up as a persistent notification in the HA UI
 scripts/dev_ha_ui.sh down
 ```
 
-`scripts/check.sh` runs locally what CI runs: pre-commit (ruff, whitespace, yaml), mypy, pytest and
-hassfest. Only the HACS validation needs GitHub: it checks the repository description and topics.
+`scripts/check.sh` runs locally what CI runs: pre-commit (ruff, whitespace, yaml), mypy, pytest, the
+card tests and hassfest. Only the HACS validation needs GitHub: it checks the repository description and topics.
 `pre-commit install` (once) adds two git hooks: fast checks (ruff, whitespace) before each commit, and
-`scripts/check.sh push` (mypy, pytest, hassfest) before each push.
+`scripts/check.sh push` (mypy, pytest, card tests, hassfest) before each push.
+
+After an intentional change of the card's look: `rm tests/js/__snapshots__/*.png && npm test`, check the new
+pictures and commit them (or run the CI workflow with *update-snapshots* and take them from the artifact).
 
 Releases: see [docs/VERSION_MANAGEMENT.md](docs/VERSION_MANAGEMENT.md) (`python scripts/bump_version.py patch --pr`,
 the Release workflow tags and publishes after the merge).

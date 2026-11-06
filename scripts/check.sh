@@ -2,8 +2,8 @@
 # Run locally what CI runs. HACS validation is not here: it checks the GitHub repository itself
 # (description, topics).
 #
-#   scripts/check.sh            — everything: pre-commit hooks + mypy + pytest + hassfest
-#   scripts/check.sh push       — mypy + pytest + hassfest (the pre-push git hook runs this)
+#   scripts/check.sh            — everything: pre-commit hooks + mypy + pytest + card tests + hassfest
+#   scripts/check.sh push       — mypy + pytest + card tests + hassfest (the pre-push git hook runs this)
 #   scripts/check.sh hassfest   — only hassfest
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -33,6 +33,13 @@ run_push_checks() {
   "$VENV/mypy" custom_components/notify_subscriptions
   echo "── pytest"
   "$VENV/pytest" -q
+  echo "── card (vitest + snapshots)"
+  if [ -d node_modules ]; then
+    npm test --silent
+  else
+    echo "node_modules is missing: run npm ci to test the card" >&2
+    exit 1
+  fi
   run_hassfest
 }
 

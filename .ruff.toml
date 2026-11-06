@@ -4,6 +4,8 @@ exclude = [
     ".direnv",
     ".eggs",
     ".git",
+    ".hassfest-core",
+    ".venv-ha",
     ".git-rewrite",
     ".hg",
     ".ipynb_checkpoints",

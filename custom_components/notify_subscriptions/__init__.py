@@ -8,8 +8,10 @@ from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.typing import ConfigType
 
 from .const import DOMAIN
+from .frontend import async_register_frontend
 from .services import async_register_services
 from .store import SubscriptionStore
+from .websocket import async_register_websocket
 
 CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
@@ -17,8 +19,10 @@ type NotifySubscriptionsConfigEntry = ConfigEntry[SubscriptionStore]
 
 
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
-    """Register the services; they report a clear error until the entry is loaded."""
+    """Register services, the card's WebSocket API and the card itself."""
     async_register_services(hass)
+    async_register_websocket(hass)
+    await async_register_frontend(hass)
     return True
 
 
