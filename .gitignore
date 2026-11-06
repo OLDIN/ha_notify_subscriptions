@@ -6,6 +6,9 @@ __pycache__
 */dist/*
 
 # misc
+node_modules/
+# Output of failed snapshot comparisons (the reference *.png files are committed)
+tests/js/__snapshots__/*-diff.png
 .coverage
 .vscode/settings.json
 coverage.xml

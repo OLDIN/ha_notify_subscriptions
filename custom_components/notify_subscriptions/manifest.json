@@ -2,6 +2,8 @@
   "domain": "notify_subscriptions",
   "name": "Notify Subscriptions",
   "after_dependencies": [
+    "frontend",
+    "lovelace",
     "mobile_app"
   ],
   "codeowners": [
@@ -9,7 +11,9 @@
   ],
   "config_flow": true,
   "dependencies": [
-    "notify"
+    "http",
+    "notify",
+    "websocket_api"
   ],
   "documentation": "https://github.com/OLDIN/ha_notify_subscriptions",
   "integration_type": "service",
@@ -17,5 +21,5 @@
   "issue_tracker": "https://github.com/OLDIN/ha_notify_subscriptions/issues",
   "requirements": [],
   "single_config_entry": true,
-  "version": "0.1.0"
+  "version": "0.2.0"
 }
