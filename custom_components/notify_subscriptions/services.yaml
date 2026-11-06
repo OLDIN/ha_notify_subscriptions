@@ -1,0 +1,122 @@
+send:
+  fields:
+    topic:
+      required: true
+      example: power_change
+      selector:
+        text:
+    title:
+      example: "⚠️ Power"
+      selector:
+        text:
+    message:
+      required: true
+      example: "The power is off"
+      selector:
+        text:
+          multiline: true
+    data:
+      selector:
+        object:
+
+set_subscription:
+  fields:
+    topic:
+      required: true
+      selector:
+        text:
+    mode:
+      required: true
+      selector:
+        select:
+          options:
+            - "off"
+            - "all"
+            - "picked"
+            - "toggle"
+          translation_key: mode
+    channel:
+      selector:
+        text:
+
+test:
+  fields:
+    topic:
+      required: true
+      selector:
+        text:
+
+set_topic:
+  fields:
+    id:
+      required: true
+      example: air_raid
+      selector:
+        text:
+    name:
+      required: true
+      example: "Air raid alert"
+      selector:
+        text:
+    icon:
+      selector:
+        icon:
+    default_mode:
+      default: "off"
+      selector:
+        select:
+          options:
+            - "off"
+            - "all"
+          translation_key: mode
+    data:
+      selector:
+        object:
+
+remove_topic:
+  fields:
+    id:
+      required: true
+      selector:
+        text:
+
+set_channel:
+  fields:
+    id:
+      required: true
+      example: telegram_andrii
+      selector:
+        text:
+    user_id:
+      required: true
+      selector:
+        text:
+    name:
+      required: true
+      example: "Telegram"
+      selector:
+        text:
+    target:
+      required: true
+      example: notify.telegram_andrii
+      selector:
+        text:
+
+remove_channel:
+  fields:
+    id:
+      required: true
+      selector:
+        text:
+
+import_legacy:
+  fields:
+    topic:
+      required: true
+      selector:
+        text:
+    entity_id:
+      required: true
+      selector:
+        entity:
+          domain: input_text

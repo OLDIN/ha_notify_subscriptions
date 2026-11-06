@@ -1,0 +1,157 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Notify Subscriptions",
+        "description": "Кожен користувач сам обирає, які сповіщення отримувати і на які свої пристрої."
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Вже налаштовано."
+    }
+  },
+  "selector": {
+    "mode": {
+      "options": {
+        "off": "Вимк",
+        "all": "Усі мої",
+        "picked": "Вибрані",
+        "toggle": "Перемкнути канал"
+      }
+    }
+  },
+  "services": {
+    "send": {
+      "name": "Надіслати",
+      "description": "Надсилає сповіщення всім, хто підписаний на тему, на вибрані ними канали.",
+      "fields": {
+        "topic": {
+          "name": "Тема",
+          "description": "Id теми, наприклад power_change."
+        },
+        "title": {
+          "name": "Заголовок",
+          "description": "Заголовок сповіщення."
+        },
+        "message": {
+          "name": "Текст",
+          "description": "Текст сповіщення."
+        },
+        "data": {
+          "name": "Дані",
+          "description": "Додаткові дані для служб сповіщень (поверх даних теми)."
+        }
+      }
+    },
+    "set_subscription": {
+      "name": "Змінити підписку",
+      "description": "Змінює підписку користувача, який викликає дію.",
+      "fields": {
+        "topic": {
+          "name": "Тема",
+          "description": "Id теми."
+        },
+        "mode": {
+          "name": "Режим",
+          "description": "Вимк, усі мої пристрої, вибрані, або перемкнути один канал."
+        },
+        "channel": {
+          "name": "Канал",
+          "description": "Id каналу для перемикання."
+        }
+      }
+    },
+    "test": {
+      "name": "Надіслати тест",
+      "description": "Надсилає тестове сповіщення теми лише на підписані канали того, хто викликав.",
+      "fields": {
+        "topic": {
+          "name": "Тема",
+          "description": "Id теми."
+        }
+      }
+    },
+    "set_topic": {
+      "name": "Створити або змінити тему",
+      "description": "Тільки для адміністратора.",
+      "fields": {
+        "id": {
+          "name": "Id",
+          "description": "Малі латинські літери, цифри та _. Не змінюйте після того, як його використовують автоматизації."
+        },
+        "name": {
+          "name": "Назва",
+          "description": "Бачать користувачі."
+        },
+        "icon": {
+          "name": "Іконка",
+          "description": "Іконка Material Design."
+        },
+        "default_mode": {
+          "name": "За замовчуванням для нових користувачів",
+          "description": "Що отримують користувачі, які ще не змінювали підписку на тему."
+        },
+        "data": {
+          "name": "Дані",
+          "description": "Додаткові дані до кожного сповіщення теми (наприклад, звук push)."
+        }
+      }
+    },
+    "remove_topic": {
+      "name": "Видалити тему",
+      "description": "Тільки для адміністратора. Видаляє й усі підписки на неї.",
+      "fields": {
+        "id": {
+          "name": "Id",
+          "description": "Id теми."
+        }
+      }
+    },
+    "set_channel": {
+      "name": "Додати або змінити канал",
+      "description": "Тільки для адміністратора. Прив'язує службу чи сутність сповіщень (Telegram, пошта…) до користувача.",
+      "fields": {
+        "id": {
+          "name": "Id",
+          "description": "Малі латинські літери, цифри та _."
+        },
+        "user_id": {
+          "name": "Id користувача",
+          "description": "Користувач HA, якому належить канал."
+        },
+        "name": {
+          "name": "Назва",
+          "description": "Бачить користувач."
+        },
+        "target": {
+          "name": "Ціль",
+          "description": "Сутність notify (notify.smtp_x) або служба notify (notify.telegram_x)."
+        }
+      }
+    },
+    "remove_channel": {
+      "name": "Видалити канал",
+      "description": "Тільки для адміністратора.",
+      "fields": {
+        "id": {
+          "name": "Id",
+          "description": "Id каналу."
+        }
+      }
+    },
+    "import_legacy": {
+      "name": "Імпортувати старі підписки",
+      "description": "Тільки для адміністратора. Читає токени u:<user_id> / d:<device_tracker> з input_text і зберігає їх як підписки на тему.",
+      "fields": {
+        "topic": {
+          "name": "Тема",
+          "description": "Id теми."
+        },
+        "entity_id": {
+          "name": "input_text",
+          "description": "Helper зі старим списком."
+        }
+      }
+    }
+  }
+}

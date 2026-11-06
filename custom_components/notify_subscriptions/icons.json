@@ -1,0 +1,12 @@
+{
+  "services": {
+    "send": {"service": "mdi:bell-ring"},
+    "set_subscription": {"service": "mdi:bell-cog"},
+    "test": {"service": "mdi:bell-check"},
+    "set_topic": {"service": "mdi:tag-plus"},
+    "remove_topic": {"service": "mdi:tag-remove"},
+    "set_channel": {"service": "mdi:cellphone-message"},
+    "remove_channel": {"service": "mdi:cellphone-remove"},
+    "import_legacy": {"service": "mdi:database-import"}
+  }
+}

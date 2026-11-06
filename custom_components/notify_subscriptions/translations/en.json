@@ -1,0 +1,157 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Notify Subscriptions",
+        "description": "Every user picks which notifications they get and on which of their devices."
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Already configured."
+    }
+  },
+  "selector": {
+    "mode": {
+      "options": {
+        "off": "Off",
+        "all": "All my devices",
+        "picked": "Picked devices",
+        "toggle": "Toggle one channel"
+      }
+    }
+  },
+  "services": {
+    "send": {
+      "name": "Send",
+      "description": "Sends a notification to everyone subscribed to the topic, on the channels they picked.",
+      "fields": {
+        "topic": {
+          "name": "Topic",
+          "description": "Topic id, e.g. power_change."
+        },
+        "title": {
+          "name": "Title",
+          "description": "Notification title."
+        },
+        "message": {
+          "name": "Message",
+          "description": "Notification text."
+        },
+        "data": {
+          "name": "Data",
+          "description": "Extra data passed to the notify services (merged over the topic data)."
+        }
+      }
+    },
+    "set_subscription": {
+      "name": "Set subscription",
+      "description": "Changes the subscription of the user who calls the action.",
+      "fields": {
+        "topic": {
+          "name": "Topic",
+          "description": "Topic id."
+        },
+        "mode": {
+          "name": "Mode",
+          "description": "off, all your devices, picked devices, or toggle one channel."
+        },
+        "channel": {
+          "name": "Channel",
+          "description": "Channel id for toggle."
+        }
+      }
+    },
+    "test": {
+      "name": "Send test",
+      "description": "Sends a test notification of the topic to the caller's subscribed channels only.",
+      "fields": {
+        "topic": {
+          "name": "Topic",
+          "description": "Topic id."
+        }
+      }
+    },
+    "set_topic": {
+      "name": "Create or update topic",
+      "description": "Admin only.",
+      "fields": {
+        "id": {
+          "name": "Id",
+          "description": "Lowercase latin letters, digits and _. Never change it after automations use it."
+        },
+        "name": {
+          "name": "Name",
+          "description": "Shown to users."
+        },
+        "icon": {
+          "name": "Icon",
+          "description": "Material Design icon."
+        },
+        "default_mode": {
+          "name": "Default for new users",
+          "description": "What users who never changed the topic get."
+        },
+        "data": {
+          "name": "Data",
+          "description": "Extra data sent with every notification of the topic (e.g. push sound)."
+        }
+      }
+    },
+    "remove_topic": {
+      "name": "Remove topic",
+      "description": "Admin only. Also removes all subscriptions to it.",
+      "fields": {
+        "id": {
+          "name": "Id",
+          "description": "Topic id."
+        }
+      }
+    },
+    "set_channel": {
+      "name": "Add or update channel",
+      "description": "Admin only. Binds a notify service or entity (Telegram, e-mail, …) to a user.",
+      "fields": {
+        "id": {
+          "name": "Id",
+          "description": "Lowercase latin letters, digits and _."
+        },
+        "user_id": {
+          "name": "User id",
+          "description": "Home Assistant user who owns the channel."
+        },
+        "name": {
+          "name": "Name",
+          "description": "Shown to the user."
+        },
+        "target": {
+          "name": "Target",
+          "description": "notify entity (notify.smtp_x) or notify service (notify.telegram_x)."
+        }
+      }
+    },
+    "remove_channel": {
+      "name": "Remove channel",
+      "description": "Admin only.",
+      "fields": {
+        "id": {
+          "name": "Id",
+          "description": "Channel id."
+        }
+      }
+    },
+    "import_legacy": {
+      "name": "Import legacy subscriptions",
+      "description": "Admin only. Reads u:<user_id> / d:<device_tracker> tokens from an input_text and stores them as subscriptions to the topic.",
+      "fields": {
+        "topic": {
+          "name": "Topic",
+          "description": "Topic id."
+        },
+        "entity_id": {
+          "name": "input_text",
+          "description": "Helper with the old list."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "domain": "notify_subscriptions",
+  "name": "Notify Subscriptions",
+  "after_dependencies": [
+    "mobile_app"
+  ],
+  "codeowners": [
+    "@OLDIN"
+  ],
+  "config_flow": true,
+  "dependencies": [
+    "notify"
+  ],
+  "documentation": "https://github.com/OLDIN/ha-notify-subscriptions",
+  "integration_type": "service",
+  "iot_class": "calculated",
+  "issue_tracker": "https://github.com/OLDIN/ha-notify-subscriptions/issues",
+  "requirements": [],
+  "single_config_entry": true,
+  "version": "0.1.0"
+}
