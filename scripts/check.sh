@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
-# Run locally what CI runs: pre-commit (ruff, whitespace, yaml), mypy, pytest and hassfest.
-# HACS validation is not here: it checks the GitHub repository itself (description, topics).
+# Run locally what CI runs. HACS validation is not here: it checks the GitHub repository itself
+# (description, topics).
 #
-#   scripts/check.sh            — everything
+#   scripts/check.sh            — everything: pre-commit hooks + mypy + pytest + hassfest
+#   scripts/check.sh push       — mypy + pytest + hassfest (the pre-push git hook runs this)
 #   scripts/check.sh hassfest   — only hassfest
 set -euo pipefail
 cd "$(dirname "$0")/.."
 VENV="${VENV:-$PWD/.venv-ha}/bin"
 INTEGRATION="$PWD/custom_components/notify_subscriptions"
+
+if [ ! -x "$VENV/python" ]; then
+  echo "No virtualenv at $VENV. Run scripts/setup_dev_env.sh first (or set VENV=...)." >&2
+  exit 1
+fi
 
 run_hassfest() {
   # hassfest lives in the Home Assistant core repo; use the release the tests run on
@@ -15,17 +21,28 @@ run_hassfest() {
   version=$("$VENV/python" -c "import homeassistant.const as c; print(c.__version__)")
   if [ ! -f "$core/.version" ] || [ "$(cat "$core/.version")" != "$version" ]; then
     rm -rf "$core"
-    git clone -q --depth 1 --branch "$version" https://github.com/home-assistant/core.git "$core"
+    git clone -q --depth 1 --branch "$version" https://github.com/home-assistant/core.git "$core" 2>/dev/null
     echo "$version" > "$core/.version"
   fi
-  (cd "$core" && "$VENV/python" -m script.hassfest --integration-path "$INTEGRATION")
+  echo "── hassfest (HA $version)"
+  (cd "$core" && "$VENV/python" -m script.hassfest --integration-path "$INTEGRATION" | tail -3)
 }
 
-if [ "${1:-all}" = "hassfest" ]; then
+run_push_checks() {
+  echo "── mypy"
+  "$VENV/mypy" custom_components/notify_subscriptions
+  echo "── pytest"
+  "$VENV/pytest" -q
   run_hassfest
-  exit
-fi
+}
 
-PATH="$VENV:$PATH" "$VENV/pre-commit" run --all-files
-run_hassfest
-echo "✅ all local checks passed"
+case "${1:-all}" in
+  hassfest) run_hassfest ;;
+  push) run_push_checks ;;
+  all)
+    "$VENV/pre-commit" run --all-files
+    run_push_checks
+    echo "✅ all local checks passed"
+    ;;
+  *) echo "usage: $0 [all|push|hassfest]"; exit 1 ;;
+esac

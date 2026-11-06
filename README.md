@@ -80,7 +80,8 @@ scripts/dev_ha_ui.sh down
 
 `scripts/check.sh` runs locally what CI runs: pre-commit (ruff, whitespace, yaml), mypy, pytest and
 hassfest. Only the HACS validation needs GitHub: it checks the repository description and topics.
-`pre-commit install` runs the same hooks before each commit.
+`pre-commit install` (once) adds two git hooks: fast checks (ruff, whitespace) before each commit, and
+`scripts/check.sh push` (mypy, pytest, hassfest) before each push.
 
 Releases: see [docs/VERSION_MANAGEMENT.md](docs/VERSION_MANAGEMENT.md) (`python scripts/bump_version.py patch --pr`,
 the Release workflow tags and publishes after the merge).

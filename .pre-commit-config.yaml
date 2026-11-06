@@ -1,3 +1,9 @@
+# `pre-commit install` sets up both git hooks:
+#   pre-commit — fast checks on the changed files (whitespace, yaml, ruff)
+#   pre-push   — scripts/check.sh push: mypy, pytest and hassfest, like CI
+default_install_hook_types: [pre-commit, pre-push]
+default_stages: [pre-commit]
+
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v3.2.0
@@ -15,16 +21,10 @@ repos:
   - id: ruff-format
 - repo: local
   hooks:
-  - id: mypy
-    name: mypy
-    entry: mypy custom_components/notify_subscriptions
+  - id: push-checks
+    name: mypy + pytest + hassfest
+    entry: scripts/check.sh push
     language: system
-    types: [python]
-    pass_filenames: false
-  - id: pytest
-    name: pytest
-    entry: pytest tests/ -v
-    language: system
-    types: [python]
     pass_filenames: false
     always_run: true
+    stages: [pre-push]
